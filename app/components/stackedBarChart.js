@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
-  AreaChart,
-  Area,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -9,21 +9,19 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { Paper } from "@mui/material";
-import { parse } from "csv-parse";
+import { Card } from "@mui/material";
+import { parse } from "csv-parse/sync"; // Note: Assuming csv-parse is available
 
-const StackedAreaChart = ({ csvFile }) => {
+const StackedBarChart = ({ csvFile }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(csvFile);
-      const text = await response.text();
-      parse(text, { columns: true }, (err, records) => {
-        if (err) {
-          console.error("Error parsing CSV:", err);
-          return;
-        }
+      try {
+        const response = await fetch(csvFile);
+        const text = await response.text();
+        const records = parse(text, { columns: true });
+
         const years = Object.keys(records[0]).filter((key) => key !== "Metric");
         const transformedData = years.map((year) => {
           const yearData = { year };
@@ -33,15 +31,17 @@ const StackedAreaChart = ({ csvFile }) => {
           return yearData;
         });
         setData(transformedData);
-      });
+      } catch (err) {
+        console.error("Error fetching or parsing CSV:", err);
+      }
     };
     fetchData();
   }, [csvFile]);
 
   return (
-    <Paper sx={{ p: 2 }}>
+    <Card className="p-4">
       <ResponsiveContainer width="100%" height={400}>
-        <AreaChart data={data}>
+        <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" />
           <YAxis />
@@ -50,20 +50,18 @@ const StackedAreaChart = ({ csvFile }) => {
             Object.keys(data[0])
               .filter((key) => key !== "year")
               .map((key, index) => (
-                <Area
-                  key={`area-${index}`}
-                  type="monotone"
+                <Bar
+                  key={`bar-${index}`}
                   dataKey={key}
-                  stackId="1"
-                  stroke={`hsl(${(index * 50) % 360}, 70%, 50%)`}
+                  stackId="a"
                   fill={`hsl(${(index * 50) % 360}, 70%, 50%)`}
                 />
               ))}
           <Legend />
-        </AreaChart>
+        </BarChart>
       </ResponsiveContainer>
-    </Paper>
+    </Card>
   );
 };
 
-export default StackedAreaChart;
+export default StackedBarChart;
