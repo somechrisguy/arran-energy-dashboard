@@ -10,7 +10,8 @@ import {
   Legend,
 } from "recharts";
 import { Card } from "@mui/material";
-import { parse } from "csv-parse/sync"; // Note: Assuming csv-parse is available
+import { parse } from "csv-parse/sync";
+import { COLORS, chartStyles } from "../page";
 
 const StackedBarChart = ({ csvFile }) => {
   const [data, setData] = useState([]);
@@ -43,9 +44,9 @@ const StackedBarChart = ({ csvFile }) => {
       <ResponsiveContainer width="100%" height={400}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="year" />
-          <YAxis />
-          <Tooltip />
+          <XAxis dataKey="year" {...chartStyles} />
+          <YAxis {...chartStyles} />
+          <Tooltip contentStyle={{ backgroundColor: "#333", border: "none" }} />
           {data.length > 0 &&
             Object.keys(data[0])
               .filter((key) => key !== "year")
@@ -54,10 +55,10 @@ const StackedBarChart = ({ csvFile }) => {
                   key={`bar-${index}`}
                   dataKey={key}
                   stackId="a"
-                  fill={`hsl(${(index * 50) % 360}, 70%, 50%)`}
+                  fill={COLORS[index % COLORS.length]}
                 />
               ))}
-          <Legend />
+          <Legend {...chartStyles} />
         </BarChart>
       </ResponsiveContainer>
     </Card>

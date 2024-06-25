@@ -1,13 +1,37 @@
 "use client";
-import { Grid, Tabs, Tab } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useState } from "react";
 import { ChartTabsPanel } from "./components/ChartTabsPanel";
 import CSVPieChart from "./components/csvPieChart";
+import CSVBarChart from "./components/barChart";
 import StackedAreaChart from "./components/stackedAreaChart";
 import StackedBarChart from "./components/stackedBarChart";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import Header from "./components/Header";
+
+// Define color palette
+export const COLORS = [
+  "#8884d8",
+  "#82ca9d",
+  "#ffc658",
+  "#ff8042",
+  "#a4de6c",
+  "#d0ed57",
+  "#83a6ed",
+  "#8dd1e1",
+  "#e8c3b9",
+  "#c45850",
+];
+
+// Define common chart styles
+export const chartStyles = {
+  fontSize: 12,
+  fontFamily: "Arial, sans-serif",
+  fill: "#FFFFFF",
+  stroke: "#FFFFFF",
+  color: "#FFFFFF",
+};
 
 export default function Home() {
   const [view, setView] = useState("current");
@@ -50,13 +74,13 @@ export default function Home() {
             <StackedAreaChart csvFile="./data/1Cb.csv" />
           </ChartTabsPanel>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12}>
           <ChartTabsPanel
             title="Usage (kw/h)"
             view={view}
             handleViewChange={handleViewChange}
           >
-            <CSVPieChart csvFile="./data/2a.csv" />
+            <CSVBarChart csvFile="./data/2a.csv" />
             <StackedBarChart csvFile="./data/2b.csv" />
           </ChartTabsPanel>
         </Grid>

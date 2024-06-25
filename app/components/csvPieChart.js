@@ -9,8 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Paper } from "@mui/material";
-
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+import { COLORS, chartStyles } from "../page";
 
 const CSVPieChart = ({ csvFile }) => {
   const [data, setData] = useState([]);
@@ -49,8 +48,8 @@ const CSVPieChart = ({ csvFile }) => {
               />
             ))}
           </Pie>
-          <Tooltip />
-          <Legend />
+          <Tooltip contentStyle={{ backgroundColor: "#333", border: "none" }} />
+          <Legend {...chartStyles} wrapperStyle={{ outline: "none" }} />
         </PieChart>
       </ResponsiveContainer>
     </Paper>

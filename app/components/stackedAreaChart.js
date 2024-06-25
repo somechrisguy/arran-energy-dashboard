@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { Paper } from "@mui/material";
 import { parse } from "csv-parse";
+import { COLORS, chartStyles } from "../page";
 
 const StackedAreaChart = ({ csvFile }) => {
   const [data, setData] = useState([]);
@@ -43,9 +44,9 @@ const StackedAreaChart = ({ csvFile }) => {
       <ResponsiveContainer width="100%" height={400}>
         <AreaChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="year" />
-          <YAxis />
-          <Tooltip />
+          <XAxis dataKey="year" {...chartStyles} />
+          <YAxis {...chartStyles} />
+          <Tooltip contentStyle={{ backgroundColor: "#333", border: "none" }} />
           {data.length > 0 &&
             Object.keys(data[0])
               .filter((key) => key !== "year")
@@ -55,11 +56,11 @@ const StackedAreaChart = ({ csvFile }) => {
                   type="monotone"
                   dataKey={key}
                   stackId="1"
-                  stroke={`hsl(${(index * 50) % 360}, 70%, 50%)`}
-                  fill={`hsl(${(index * 50) % 360}, 70%, 50%)`}
+                  stroke={COLORS[index % COLORS.length]}
+                  fill={COLORS[index % COLORS.length]}
                 />
               ))}
-          <Legend />
+          <Legend {...chartStyles} />
         </AreaChart>
       </ResponsiveContainer>
     </Paper>
