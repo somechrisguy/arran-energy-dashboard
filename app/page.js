@@ -62,13 +62,16 @@ export default function Home() {
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={4}>
-          <ChartTabsPanel title="EPC Grades" view={view}>
+          <ChartTabsPanel title="EPC Grades (number of houses)" view={view}>
             <CSVPieChart csvFile="./data/1Ba.csv" />
             <StackedAreaChart csvFile="./data/1Bb.csv" />
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={4}>
-          <ChartTabsPanel title="Main heating options" view={view}>
+          <ChartTabsPanel
+            title="Main heating options (number of houses)"
+            view={view}
+          >
             <CSVPieChart csvFile="./data/1Ca.csv" />
             <StackedAreaChart csvFile="./data/1Cb.csv" />
           </ChartTabsPanel>
@@ -80,19 +83,19 @@ export default function Home() {
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={4}>
-          <ChartTabsPanel title="Savings Predictions" view={view}>
+          <ChartTabsPanel title="Savings Predictions (£/year)" view={view}>
             <CSVPieChart csvFile="./data/3Aa.csv" />
             <StackedBarChart csvFile="./data/3Ab.csv" />
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={4}>
-          <ChartTabsPanel title="Savings - actual" view={view}>
+          <ChartTabsPanel title="Savings - actual (£/year)" view={view}>
             <CSVPieChart csvFile="./data/4Aa.csv" />
             <StackedBarChart csvFile="./data/4Ab.csv" />
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={4}>
-          <ChartTabsPanel title="Energy Generated" view={view}>
+          <ChartTabsPanel title="Energy Generated (kw/year)" view={view}>
             <CSVPieChart csvFile="./data/5Aa.csv" />
             <StackedBarChart csvFile="./data/5Ab.csv" />
           </ChartTabsPanel>
