@@ -14,7 +14,7 @@ export default function Partners() {
         Our Partners
       </Typography>
       <Typography paragraph>
-        We're proud to work with the following organizations to promote
+        We are proud to work with the following organizations to promote
         renewable energy on the Isle of Arran:
       </Typography>
       <List>
