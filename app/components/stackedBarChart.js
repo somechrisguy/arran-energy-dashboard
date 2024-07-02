@@ -9,9 +9,39 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { Card } from "@mui/material";
+import { Card, Box, Typography } from "@mui/material";
 import { parse } from "csv-parse/sync";
 import { COLORS, chartStyles } from "../page";
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <Box
+        sx={{
+          backgroundColor: "rgba(0, 0, 0, 0.8)",
+          border: "1px solid #ccc",
+          padding: "10px",
+          borderRadius: "4px",
+        }}
+      >
+        <Typography
+          sx={{ color: "#fff", fontSize: "0.875rem", marginBottom: "5px" }}
+        >
+          {`Year: ${label}`}
+        </Typography>
+        {payload.map((entry, index) => (
+          <Typography
+            key={index}
+            sx={{ color: entry.color, fontSize: "0.875rem" }}
+          >
+            {`${entry.name}: ${entry.value}`}
+          </Typography>
+        ))}
+      </Box>
+    );
+  }
+  return null;
+};
 
 const StackedBarChart = ({ csvFile }) => {
   const [data, setData] = useState([]);
@@ -46,7 +76,7 @@ const StackedBarChart = ({ csvFile }) => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" {...chartStyles} />
           <YAxis {...chartStyles} />
-          <Tooltip contentStyle={{ backgroundColor: "#333", border: "none" }} />
+          <Tooltip content={<CustomTooltip />} />
           {data.length > 0 &&
             Object.keys(data[0])
               .filter((key) => key !== "year")

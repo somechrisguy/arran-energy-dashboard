@@ -1,25 +1,30 @@
-import { AppBar, Toolbar, Typography, Tabs, Tab } from "@mui/material";
+// app/components/Header.js
+import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
+import Link from "next/link";
 
-function Header({ view, handleViewChange }) {
+function Header() {
   return (
-    <AppBar position="static" sx={{ backgroundColor: "background.default" }}>
-      <Toolbar>
+    <AppBar position="static" sx={{ backgroundColor: "background.paper" }}>
+      <Toolbar sx={{ justifyContent: "space-between" }}>
         <Typography
           variant="h6"
           component="div"
-          sx={{ flexGrow: 1, color: "text.primary" }}
+          sx={{ color: "text.primary", lineHeight: 1.2 }}
         >
-          EnergyDashboard
+          REPID - Renewable Energy Progress - Indicator & Dashboard <br />
+          For the Isle of Arran
         </Typography>
-        <Tabs
-          value={view}
-          onChange={handleViewChange}
-          aria-label="chart tabs"
-          sx={{ "& .MuiTab-root": { color: "text.primary" } }}
-        >
-          <Tab label="Current" value="current" />
-          <Tab label="Projection" value="projection" />
-        </Tabs>
+        <Box>
+          <Button color="inherit" component={Link} href="/">
+            Home
+          </Button>
+          <Button color="inherit" component={Link} href="/about">
+            About
+          </Button>
+          <Button color="inherit" component={Link} href="/partners">
+            Partners
+          </Button>
+        </Box>
       </Toolbar>
     </AppBar>
   );

@@ -9,9 +9,39 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { Paper } from "@mui/material";
+import { Paper, Box, Typography } from "@mui/material";
 import { parse } from "csv-parse";
 import { COLORS, chartStyles } from "../page";
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <Box
+        sx={{
+          backgroundColor: "rgba(0, 0, 0, 0.8)",
+          border: "1px solid #ccc",
+          padding: "10px",
+          borderRadius: "4px",
+        }}
+      >
+        <Typography
+          sx={{ color: "#fff", fontSize: "0.875rem", marginBottom: "5px" }}
+        >
+          {`Year: ${label}`}
+        </Typography>
+        {payload.map((entry, index) => (
+          <Typography
+            key={index}
+            sx={{ color: entry.color, fontSize: "0.875rem" }}
+          >
+            {`${entry.name}: ${entry.value}`}
+          </Typography>
+        ))}
+      </Box>
+    );
+  }
+  return null;
+};
 
 const StackedAreaChart = ({ csvFile }) => {
   const [data, setData] = useState([]);
@@ -46,7 +76,7 @@ const StackedAreaChart = ({ csvFile }) => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" {...chartStyles} />
           <YAxis {...chartStyles} />
-          <Tooltip contentStyle={{ backgroundColor: "#333", border: "none" }} />
+          <Tooltip content={<CustomTooltip />} />
           {data.length > 0 &&
             Object.keys(data[0])
               .filter((key) => key !== "year")
@@ -60,7 +90,12 @@ const StackedAreaChart = ({ csvFile }) => {
                   fill={COLORS[index % COLORS.length]}
                 />
               ))}
-          <Legend {...chartStyles} />
+          <Legend
+            {...chartStyles}
+            formatter={(value) => (
+              <span style={{ color: "white" }}>{value}</span>
+            )}
+          />
         </AreaChart>
       </ResponsiveContainer>
     </Paper>
