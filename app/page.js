@@ -56,38 +56,42 @@ export default function Home() {
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <ChartTabsPanel title="Usage (kw/h)" view={view}>
-            <CSVDonutChart csvFile="./data/2a.csv" />
+          <ChartTabsPanel title="Energy Usage" view={view}>
+            <CSVDonutChart csvFile="./data/2a.csv" unit="kWh/yr" />
             <StackedBarChart csvFile="./data/2b.csv" />
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={6}>
-          <ChartTabsPanel title="Energy Generated (kw/year)" view={view}>
-            <CSVDonutChart csvFile="./data/5Aa.csv" />
+          <ChartTabsPanel title="Energy Generation" view={view}>
+            <CSVDonutChart csvFile="./data/5Aa.csv" unit="kWh/yr" />
             <StackedBarChart csvFile="./data/5Ab.csv" />
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={6}>
           <ChartTabsPanel title="EPC Grades" view={view}>
-            <CSVDonutChart csvFile="./data/1Ba.csv" unit="houses" />
+            <CSVDonutChart csvFile="./data/1Ba.csv" unit=" houses" />
             <StackedAreaChart csvFile="./data/1Bb.csv" />
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={6}>
           <ChartTabsPanel title="Main heating options" view={view}>
-            <CSVDonutChart csvFile="./data/1Ca.csv" unit="houses" />
+            <CSVDonutChart csvFile="./data/1Ca.csv" unit=" houses" />
             <StackedAreaChart csvFile="./data/1Cb.csv" />
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={6}>
-          <ChartTabsPanel title="Savings Predictions (£/year)" view={view}>
-            <CSVDonutChart csvFile="./data/3Aa.csv" />
+          <ChartTabsPanel title="Predicted Savings" view={view}>
+            <CSVDonutChart csvFile="./data/3Aa.csv" prefixUnit="£" unit="/yr" />
             <StackedBarChart csvFile="./data/3Ab.csv" />
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={6}>
-          <ChartTabsPanel title="Savings - actual (£/year)" view={view}>
-            <CSVDonutChart csvFile="./data/4Aa.csv" />
+          <ChartTabsPanel title="Actual Savings" view={view}>
+            <CSVDonutChart
+              csvFile="./data/4Aa.csv"
+              prefixUnit="£"
+              unit="/year"
+            />
             <StackedBarChart csvFile="./data/4Ab.csv" />
           </ChartTabsPanel>
         </Grid>

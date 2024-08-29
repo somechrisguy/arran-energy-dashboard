@@ -4,7 +4,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Sector } from "recharts";
 import { Box, Typography } from "@mui/material";
 import { COLORS } from "../page";
 
-const CSVDonutChart = ({ csvFile, unit }) => {
+const CSVDonutChart = ({ csvFile, unit = "", prefixUnit = "" }) => {
   const [data, setData] = useState([]);
   const [total, setTotal] = useState(0);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -40,49 +40,16 @@ const CSVDonutChart = ({ csvFile, unit }) => {
     setActiveIndex(-1);
   };
 
+  // Function to format numbers with commas
+  const formatNumber = (num) => {
+    return num.toLocaleString("en-US");
+  };
+
   const renderActiveShape = (props) => {
-    const {
-      cx,
-      cy,
-      innerRadius,
-      outerRadius,
-      startAngle,
-      endAngle,
-      fill,
-      payload,
-    } = props;
-
-    if (activeIndex === -1 && hoveredLegendIndex === -1) {
-      return (
-        <g>
-          <text x={cx} y={cy} dy={8} textAnchor="middle" fill="white">
-            <tspan x={cx} dy="-0.6rem">
-              Total
-            </tspan>
-            <tspan x={cx} dy="1.5em">{`${total}${
-              unit ? " " + unit : ""
-            }`}</tspan>
-          </text>
-        </g>
-      );
-    }
-
-    const percent = ((payload.value / total) * 100).toFixed(1);
+    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } =
+      props;
     return (
       <g>
-        <text x={cx} y={cy} dy={8} textAnchor="middle" fill="white">
-          <tspan x={cx} dy="-0.6rem">
-            {payload.name.split(" ").slice(0, 2).join(" ")}
-          </tspan>
-          {payload.name.split(" ").length > 2 && (
-            <tspan x={cx} dy="1.2em">
-              {payload.name.split(" ").slice(2).join(" ")}
-            </tspan>
-          )}
-          <tspan x={cx} dy="1.5em">{`${percent}% (${payload.value}${
-            unit ? " " + unit : ""
-          })`}</tspan>
-        </text>
         <Sector
           cx={cx}
           cy={cy}
@@ -103,6 +70,51 @@ const CSVDonutChart = ({ csvFile, unit }) => {
         />
       </g>
     );
+  };
+
+  const renderCenterText = () => {
+    const selectedIndex =
+      hoveredLegendIndex !== -1 ? hoveredLegendIndex : activeIndex;
+    if (selectedIndex === -1) {
+      return (
+        <text
+          x="50%"
+          y="50%"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill="white"
+        >
+          <tspan x="50%" dy="-0.5em" fontSize="24" fontWeight="bold">
+            Total
+          </tspan>
+          <tspan x="50%" dy="1.5em" fontSize="18">{`${prefixUnit}${formatNumber(
+            total
+          )}${unit}`}</tspan>
+        </text>
+      );
+    } else {
+      const selectedData = data[selectedIndex];
+      const percent = ((selectedData.value / total) * 100).toFixed(1);
+      return (
+        <text
+          x="50%"
+          y="50%"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill="white"
+        >
+          <tspan x="50%" dy="-1.2em" fontWeight="bold" fontSize="16">
+            {selectedData.name}
+          </tspan>
+          <tspan x="50%" dy="1.5em" fontSize="18">{`${percent}%`}</tspan>
+          <tspan
+            x="50%"
+            dy="1.5em"
+            fontSize="16"
+          >{`(${prefixUnit}${formatNumber(selectedData.value)}${unit})`}</tspan>
+        </text>
+      );
+    }
   };
 
   const CustomLegend = ({ payload }) => (
@@ -144,20 +156,19 @@ const CSVDonutChart = ({ csvFile, unit }) => {
   return (
     <Box
       sx={{
-        height: "550px",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        position: "relative",
       }}
     >
       <Box
         sx={{
+          flex: "0 0 500px", // Set a fixed height for the chart
+          maxHeight: "50vh",
           display: "flex",
-          flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          minHeight: 0,
           position: "relative",
           marginTop: "20px",
           marginBottom: "10px",
@@ -175,7 +186,7 @@ const CSVDonutChart = ({ csvFile, unit }) => {
               cy="50%"
               startAngle={90}
               endAngle={-270}
-              innerRadius="50%"
+              innerRadius="60%"
               outerRadius="95%"
               fill="#8884d8"
               dataKey="value"
@@ -189,16 +200,26 @@ const CSVDonutChart = ({ csvFile, unit }) => {
                 />
               ))}
             </Pie>
+            {renderCenterText()}
           </PieChart>
         </ResponsiveContainer>
       </Box>
-      <CustomLegend
-        payload={data.map((item, index) => ({
-          id: item.name,
-          value: `${item.name} (${item.value})`,
-          color: COLORS[index % COLORS.length],
-        }))}
-      />
+      <Box
+        sx={{
+          flexGrow: 1,
+          overflow: "auto",
+          py: 2,
+          px: 1,
+        }}
+      >
+        <CustomLegend
+          payload={data.map((item, index) => ({
+            id: item.name,
+            value: `${item.name}`,
+            color: COLORS[index % COLORS.length],
+          }))}
+        />
+      </Box>
     </Box>
   );
 };

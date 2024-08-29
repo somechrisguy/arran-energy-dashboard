@@ -32,7 +32,7 @@ export function ChartTabsPanel({ children, title, view }) {
           {title}
         </Typography>
         <IconButton onClick={handleOpenModal} size="small">
-          <InfoIcon />
+          <InfoIcon sx={{ cursor: "pointer" }} />
         </IconButton>
       </Box>
       <Box
