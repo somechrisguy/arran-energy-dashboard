@@ -1,7 +1,7 @@
 Metric,2023
-ASHP (air source heat pump),292
+ASHP,292
 Coal,20
-Dual fuel (mineral & wood),13
+Dual fuel,13
 Electric,326
 LPG,81
 Oil,550
@@ -9,4 +9,4 @@ Smokeless fuels,10
 Biomass,5
 Community scheme,4
 Electric storage heater,735
-GSHP (ground source heat pump),4
+GSHP,4

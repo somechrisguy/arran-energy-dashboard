@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Grid, Tabs, Tab, Box } from "@mui/material";
 import { ChartTabsPanel } from "./components/ChartTabsPanel";
-import CSVPieChart from "./components/csvPieChart";
+import CSVDonutChart from "./components/csvDonutChart";
 import CSVBarChart from "./components/barChart";
 import StackedAreaChart from "./components/stackedAreaChart";
 import StackedBarChart from "./components/stackedBarChart";
@@ -55,49 +55,40 @@ export default function Home() {
         </Tabs>
       </Box>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <ChartTabsPanel title="General info" view={view}>
-            <CSVPieChart csvFile="./data/1Aa.csv" />
-            <StackedAreaChart csvFile="./data/1Ab.csv" />
-          </ChartTabsPanel>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <ChartTabsPanel title="EPC Grades (number of houses)" view={view}>
-            <CSVPieChart csvFile="./data/1Ba.csv" />
-            <StackedAreaChart csvFile="./data/1Bb.csv" />
-          </ChartTabsPanel>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <ChartTabsPanel
-            title="Main heating options (number of houses)"
-            view={view}
-          >
-            <CSVPieChart csvFile="./data/1Ca.csv" />
-            <StackedAreaChart csvFile="./data/1Cb.csv" />
-          </ChartTabsPanel>
-        </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <ChartTabsPanel title="Usage (kw/h)" view={view}>
-            <CSVBarChart csvFile="./data/2a.csv" />
+            <CSVDonutChart csvFile="./data/2a.csv" />
             <StackedBarChart csvFile="./data/2b.csv" />
           </ChartTabsPanel>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
+          <ChartTabsPanel title="Energy Generated (kw/year)" view={view}>
+            <CSVDonutChart csvFile="./data/5Aa.csv" />
+            <StackedBarChart csvFile="./data/5Ab.csv" />
+          </ChartTabsPanel>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <ChartTabsPanel title="EPC Grades" view={view}>
+            <CSVDonutChart csvFile="./data/1Ba.csv" unit="houses" />
+            <StackedAreaChart csvFile="./data/1Bb.csv" />
+          </ChartTabsPanel>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <ChartTabsPanel title="Main heating options" view={view}>
+            <CSVDonutChart csvFile="./data/1Ca.csv" unit="houses" />
+            <StackedAreaChart csvFile="./data/1Cb.csv" />
+          </ChartTabsPanel>
+        </Grid>
+        <Grid item xs={12} md={6}>
           <ChartTabsPanel title="Savings Predictions (£/year)" view={view}>
-            <CSVPieChart csvFile="./data/3Aa.csv" />
+            <CSVDonutChart csvFile="./data/3Aa.csv" />
             <StackedBarChart csvFile="./data/3Ab.csv" />
           </ChartTabsPanel>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <ChartTabsPanel title="Savings - actual (£/year)" view={view}>
-            <CSVPieChart csvFile="./data/4Aa.csv" />
+            <CSVDonutChart csvFile="./data/4Aa.csv" />
             <StackedBarChart csvFile="./data/4Ab.csv" />
-          </ChartTabsPanel>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <ChartTabsPanel title="Energy Generated (kw/year)" view={view}>
-            <CSVPieChart csvFile="./data/5Aa.csv" />
-            <StackedBarChart csvFile="./data/5Ab.csv" />
           </ChartTabsPanel>
         </Grid>
       </Grid>

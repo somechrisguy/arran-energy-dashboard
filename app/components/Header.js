@@ -11,8 +11,7 @@ function Header() {
           component="div"
           sx={{ color: "text.primary", lineHeight: 1.2 }}
         >
-          REPID - Renewable Energy Progress - Indicator & Dashboard <br />
-          For the Isle of Arran
+          Isle of Arran - Energy Use & Generation Dashboard
         </Typography>
         <Box>
           <Button color="inherit" component={Link} href="/">
