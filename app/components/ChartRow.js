@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Grid, Box, Card, Typography, CircularProgress } from "@mui/material";
-import CSVDonutChart from "./CSVDonutChart";
-import StackedBarChart from "./StackedBarChart";
-import StackedAreaChart from "./StackedAreaChart";
+import CSVDonutChart from "./csvDonutChart";
+import StackedBarChart from "./stackedBarChart";
+import StackedAreaChart from "./stackedAreaChart";
 import SharedLegend from "./SharedLegend";
 
 const ChartRow = ({ title, csvFile, unit = "", prefixUnit = "" }) => {

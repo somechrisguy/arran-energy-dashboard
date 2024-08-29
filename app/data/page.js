@@ -1,6 +1,6 @@
 "use client";
 import { Grid } from "@mui/material";
-import ChartRow from "./components/ChartRow";
+import ChartRow from "../components/ChartRow";
 import Head from "next/head";
 
 export const COLORS = [

@@ -1,5 +1,5 @@
 // app/partners/page.js
-import { Typography, List, ListItem, ListItemText, Paper } from "@mui/material";
+import { Typography, List, ListItem, ListItemText, Box } from "@mui/material";
 
 const partners = [
   "Arran Eco Savvy",
