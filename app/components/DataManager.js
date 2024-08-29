@@ -8,7 +8,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import CSVImporter from "./CSVImporter";
+import CSVImporter from "./csvImporter";
 
 const DataManager = () => {
   const [jsonFiles, setJsonFiles] = useState([]);

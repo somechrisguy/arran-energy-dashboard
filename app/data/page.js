@@ -9,7 +9,7 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import CSVImporter from "../components/CSVImporter";
+import CSVImporter from "../components/csvImporter";
 
 const DataManager = () => {
   const [jsonFiles, setJsonFiles] = useState([]);
