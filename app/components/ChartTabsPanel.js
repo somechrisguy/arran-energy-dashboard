@@ -1,17 +1,17 @@
 // app/components/ChartTabsPanel.js
 "use client";
 import React, { useState } from "react";
-import { Box, Typography, Paper, IconButton, Modal } from "@mui/material";
+import { Box, Typography, Card, IconButton, Modal } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 
-export function ChartTabsPanel({ children, title, view }) {
+export function ChartTabsPanel({ children, title }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
   return (
-    <Paper
+    <Box
       sx={{
         height: "100%",
         display: "flex",
@@ -44,7 +44,7 @@ export function ChartTabsPanel({ children, title, view }) {
           pb: 3,
         }}
       >
-        {view === "current" ? children[0] : children[1]}
+        {children}
       </Box>
 
       <Modal
@@ -60,7 +60,6 @@ export function ChartTabsPanel({ children, title, view }) {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: 400,
-            bgcolor: "background.paper",
             border: "2px solid #000",
             boxShadow: 24,
             p: 4,
@@ -76,6 +75,6 @@ export function ChartTabsPanel({ children, title, view }) {
           </Typography>
         </Box>
       </Modal>
-    </Paper>
+    </Box>
   );
 }

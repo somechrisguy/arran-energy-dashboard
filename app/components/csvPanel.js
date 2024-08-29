@@ -31,7 +31,7 @@ const CSVPanel = ({ csvFile }) => {
   }, [csvFile]);
 
   return (
-    <Paper sx={{ p: 2 }}>
+    <Box sx={{ p: 2 }}>
       <Typography variant="h6" component="h2" gutterBottom>
         {csvFile}
       </Typography>
@@ -48,7 +48,7 @@ const CSVPanel = ({ csvFile }) => {
           activeDot={{ r: 8 }}
         />
       </LineChart>
-    </Paper>
+    </Box>
   );
 };
 

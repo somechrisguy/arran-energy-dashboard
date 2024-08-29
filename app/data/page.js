@@ -1,177 +1,67 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  TextField,
-} from "@mui/material";
-import CSVImporter from "../components/csvImporter";
+import { Grid } from "@mui/material";
+import ChartRow from "./components/ChartRow";
+import Head from "next/head";
 
-const DataManager = () => {
-  const [jsonFiles, setJsonFiles] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [fileContent, setFileContent] = useState(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+export const COLORS = [
+  "#8884d8",
+  "#82ca9d",
+  "#ffc658",
+  "#ff8042",
+  "#a4de6c",
+  "#d0ed57",
+  "#83a6ed",
+  "#8dd1e1",
+  "#e8c3b9",
+  "#c45850",
+];
 
-  useEffect(() => {
-    loadJsonFiles();
-  }, []);
-
-  const loadJsonFiles = async () => {
-    try {
-      const response = await fetch("/api/list-json-files");
-      const data = await response.json();
-      setJsonFiles(data);
-    } catch (error) {
-      console.error("Error loading JSON files:", error);
-    }
-  };
-
-  const handleFileSelect = async (filename) => {
-    try {
-      const response = await fetch(`/api/json-file?filename=${filename}`);
-      const content = await response.json();
-      setSelectedFile(filename);
-      setFileContent(content);
-      setTitle(content.title || "");
-      setDescription(content.description || "");
-    } catch (error) {
-      console.error("Error reading file:", error);
-    }
-  };
-
-  const handleSave = async () => {
-    if (selectedFile) {
-      try {
-        const updatedContent = {
-          ...fileContent,
-          title,
-          description,
-        };
-        const response = await fetch("/api/update-json-file", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            filename: selectedFile,
-            content: updatedContent,
-          }),
-        });
-        if (response.ok) {
-          setFileContent(updatedContent);
-          console.log("File updated successfully");
-        } else {
-          console.error("Error updating file");
-        }
-      } catch (error) {
-        console.error("Error updating file:", error);
-      }
-    }
-  };
-
-  const handleDataImported = async (data) => {
-    if (selectedFile) {
-      try {
-        const updatedContent = {
-          ...fileContent,
-          title,
-          description,
-          data: data,
-        };
-        const response = await fetch("/api/update-json-file", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            filename: selectedFile,
-            content: updatedContent,
-          }),
-        });
-        if (response.ok) {
-          setFileContent(updatedContent);
-          console.log("File updated successfully with new CSV data");
-        } else {
-          console.error("Error updating file with new CSV data");
-        }
-      } catch (error) {
-        console.error("Error updating file with new CSV data:", error);
-      }
-    }
-  };
-
-  return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        Data Manager
-      </Typography>
-      <Box display="flex">
-        <Box width="30%" mr={2}>
-          <Typography variant="h6" gutterBottom>
-            JSON Files
-          </Typography>
-          <List>
-            {jsonFiles.map((file) => (
-              <ListItem
-                button="true"
-                key={file}
-                selected={file === selectedFile}
-                onClick={() => handleFileSelect(file)}
-              >
-                <ListItemText primary={file} />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-        <Box width="70%">
-          {selectedFile ? (
-            <>
-              <Typography variant="h6" gutterBottom>
-                Selected File: {selectedFile}
-              </Typography>
-              <TextField
-                label="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                fullWidth
-                margin="normal"
-                multiline
-                rows={3}
-              />
-              <Button
-                onClick={handleSave}
-                variant="contained"
-                color="primary"
-                sx={{ mt: 2, mr: 2 }}
-              >
-                Save Changes
-              </Button>
-              <CSVImporter onDataImported={handleDataImported} />
-              {fileContent && (
-                <Box mt={2}>
-                  <Typography variant="h6">Current Content:</Typography>
-                  <pre>{JSON.stringify(fileContent, null, 2)}</pre>
-                </Box>
-              )}
-            </>
-          ) : (
-            <Typography>Please select a file from the list</Typography>
-          )}
-        </Box>
-      </Box>
-    </Box>
-  );
+export const chartStyles = {
+  fontSize: 12,
+  fontFamily: "Arial, sans-serif",
+  fill: "#FFFFFF",
+  stroke: "#FFFFFF",
+  color: "#FFFFFF",
 };
 
-export default function DataPage() {
-  return <DataManager />;
+export default function Home() {
+  return (
+    <>
+      <Head>
+        <title>REPID Dashboard</title>
+      </Head>
+      <Grid container spacing={2}>
+        <ChartRow title="Energy Usage" csvFile="/data/2b.csv" unit="kWh/yr" />
+        <ChartRow
+          title="Energy Generation"
+          csvFile="/data/5Ab.csv"
+          unit="kWh/yr"
+        />
+        <ChartRow
+          title="EPC Grades"
+          csvFile="/data/1Bb.csv"
+          unit=" houses"
+          chartType="area"
+        />
+        <ChartRow
+          title="Main heating options"
+          csvFile="/data/1Cb.csv"
+          unit=" houses"
+          chartType="area"
+        />
+        <ChartRow
+          title="Predicted Savings"
+          csvFile="/data/3Ab.csv"
+          prefixUnit="£"
+          unit="/yr"
+        />
+        <ChartRow
+          title="Actual Savings"
+          csvFile="/data/4Ab.csv"
+          prefixUnit="£"
+          unit="/year"
+        />
+      </Grid>
+    </>
+  );
 }

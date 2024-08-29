@@ -12,7 +12,7 @@ import {
 
 const AboutPage = () => {
   return (
-    <Paper sx={{ p: 4, maxWidth: 800, mx: "auto" }}>
+    <Box sx={{ p: 4, maxWidth: 800, mx: "auto" }}>
       <Typography variant="h2" component="h1" gutterBottom>
         About REPID
       </Typography>
@@ -197,7 +197,7 @@ const AboutPage = () => {
           on Arran is applying for the same funding
         </Typography>
       </Box>
-    </Paper>
+    </Box>
   );
 };
 

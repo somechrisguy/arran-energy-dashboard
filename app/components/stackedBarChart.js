@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   BarChart,
   Bar,
@@ -10,7 +10,6 @@ import {
   Legend,
 } from "recharts";
 import { Card, Box, Typography } from "@mui/material";
-import { parse } from "csv-parse/sync";
 import { COLORS, chartStyles } from "../page";
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -43,55 +42,34 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-const StackedBarChart = ({ csvFile }) => {
-  const [data, setData] = useState([]);
+const StackedBarChart = ({ data, showLegend = true }) => {
+  if (!data || data.length === 0) {
+    return <div>No data available</div>;
+  }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(csvFile);
-        const text = await response.text();
-        const records = parse(text, { columns: true });
-
-        const years = Object.keys(records[0]).filter((key) => key !== "Metric");
-        const transformedData = years.map((year) => {
-          const yearData = { year };
-          records.forEach((record) => {
-            yearData[record.Metric] = parseInt(record[year], 10);
-          });
-          return yearData;
-        });
-        setData(transformedData);
-      } catch (err) {
-        console.error("Error fetching or parsing CSV:", err);
-      }
-    };
-    fetchData();
-  }, [csvFile]);
+  const keys = Object.keys(data[0]).filter((key) => key !== "name");
 
   return (
-    <Card className="p-4">
+    <Box sx={{ p: 2 }}>
       <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={data}>
+        <BarChart data={data} cursor={false}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="year" {...chartStyles} />
+          <XAxis dataKey="name" {...chartStyles} />
           <YAxis {...chartStyles} />
           <Tooltip content={<CustomTooltip />} />
-          {data.length > 0 &&
-            Object.keys(data[0])
-              .filter((key) => key !== "year")
-              .map((key, index) => (
-                <Bar
-                  key={`bar-${index}`}
-                  dataKey={key}
-                  stackId="a"
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-          <Legend {...chartStyles} />
+          {keys.map((key, index) => (
+            <Bar
+              key={`bar-${index}`}
+              dataKey={key}
+              stackId="a"
+              fill={COLORS[index % COLORS.length]}
+              cursor={false}
+            />
+          ))}
+          {showLegend && <Legend {...chartStyles} />}
         </BarChart>
       </ResponsiveContainer>
-    </Card>
+    </Box>
   );
 };
 

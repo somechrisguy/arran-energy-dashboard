@@ -9,7 +9,7 @@ const partners = [
 
 export default function Partners() {
   return (
-    <Paper sx={{ p: 4 }}>
+    <Box sx={{ p: 4 }}>
       <Typography variant="h2" component="h1" gutterBottom>
         Our Partners
       </Typography>
@@ -24,6 +24,6 @@ export default function Partners() {
           </ListItem>
         ))}
       </List>
-    </Paper>
+    </Box>
   );
 }
