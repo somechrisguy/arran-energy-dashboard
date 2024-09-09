@@ -12,7 +12,7 @@ import {
 
 const AboutPage = () => {
   return (
-    <Paper sx={{ p: 4, maxWidth: 800, mx: "auto" }}>
+    <Paper sx={{ p: 4, mx: "auto" }}>
       <Typography variant="h2" component="h1" gutterBottom>
         About REPID
       </Typography>
@@ -189,14 +189,6 @@ const AboutPage = () => {
           />
         </ListItem>
       </List>
-
-      <Box sx={{ mt: 3 }}>
-        <Typography variant="subtitle2" color="text.secondary">
-          Problems with funding: not the right constitution, additional / match
-          funding needed (so we need a partnership). + More than 1 organisation
-          on Arran is applying for the same funding
-        </Typography>
-      </Box>
     </Paper>
   );
 };
