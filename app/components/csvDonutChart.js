@@ -4,29 +4,10 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Sector } from "recharts";
 import { Box, Typography } from "@mui/material";
 import { COLORS } from "../page";
 
-const CSVDonutChart = ({ csvFile, unit = "", prefixUnit = "" }) => {
-  const [data, setData] = useState([]);
+const CSVDonutChart = ({ data, unit = "", prefixUnit = "" }) => {
   const [total, setTotal] = useState(0);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [hoveredLegendIndex, setHoveredLegendIndex] = useState(-1);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(csvFile);
-      const text = await response.text();
-      const records = text.trim().split("\n").slice(1);
-      const parsedData = records.map((record) => {
-        const [name, value] = record.split(",");
-        return { name, value: parseInt(value, 10) };
-      });
-
-      // Sort the data in descending order by value
-      parsedData.sort((a, b) => b.value - a.value);
-
-      setData(parsedData);
-    };
-    fetchData();
-  }, [csvFile]);
 
   useEffect(() => {
     setTotal(data.reduce((a, b) => a + b.value, 0));
@@ -164,7 +145,7 @@ const CSVDonutChart = ({ csvFile, unit = "", prefixUnit = "" }) => {
     >
       <Box
         sx={{
-          flex: "0 0 500px", // Set a fixed height for the chart
+          flex: "0 0 500px",
           maxHeight: "50vh",
           display: "flex",
           justifyContent: "center",
@@ -204,14 +185,7 @@ const CSVDonutChart = ({ csvFile, unit = "", prefixUnit = "" }) => {
           </PieChart>
         </ResponsiveContainer>
       </Box>
-      <Box
-        sx={{
-          flexGrow: 1,
-          overflow: "auto",
-          py: 2,
-          px: 1,
-        }}
-      >
+      <Box sx={{ flexGrow: 1, overflow: "auto", py: 2, px: 1 }}>
         <CustomLegend
           payload={data.map((item, index) => ({
             id: item.name,

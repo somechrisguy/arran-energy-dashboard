@@ -1,10 +1,38 @@
 // app/partners/page.js
-import { Typography, List, ListItem, ListItemText, Paper } from "@mui/material";
+import {
+  Typography,
+  Link,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+} from "@mui/material";
 
 const partners = [
-  "Arran Eco Savvy",
-  "North Ayrshire Council",
-  "Arran Pioneer Project",
+  {
+    name: "Arran Dairies / Taste of Arran",
+    url: "https://arranicecream.co.uk",
+  },
+  { name: "Arran Active", url: "https://www.arranactive.co.uk" },
+  {
+    name: "Pioneer Project / Dùthchas Arainn CBS",
+    url: "https://pioneerproject.scot",
+  },
+  {
+    name: "Island Gourmet / Robin Gray Farm",
+    url: "https://www.island-gourmet.com",
+  },
+  { name: "Lochranza centre", url: "https://www.lochranzacentre.co.uk" },
+  { name: "Arran Renewables", url: "https://www.arranrenewables.com" },
+  { name: "Heritage museum", url: "https://www.arranmuseum.co.uk" },
+  { name: "Auchrannie Resort", url: "https://www.auchrannie.co.uk" },
+  { name: "The Kirk at Kildonan", url: "https://kirkatkildonan.com" },
+  { name: "Ormidale Hotel", url: "https://www.ormidale-hotel.co.uk" },
+  {
+    name: "The Parlour Brodick",
+    url: "https://www.facebook.com/theparlourarran/",
+  },
+  { name: "Little Rock Cafe", url: "https://www.littlerockarran.com" },
 ];
 
 export default function Partners() {
@@ -20,7 +48,18 @@ export default function Partners() {
       <List>
         {partners.map((partner, index) => (
           <ListItem key={index}>
-            <ListItemText primary={partner} />
+            <ListItemText
+              primary={
+                <Link
+                  href={partner.url}
+                  sx={{ color: "white" }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {partner.name}
+                </Link>
+              }
+            />
           </ListItem>
         ))}
       </List>
