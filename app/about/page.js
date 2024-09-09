@@ -117,7 +117,7 @@ const AboutPage = () => {
 
       <Box sx={{ mt: 3 }}>
         <Typography variant="h6" gutterBottom>
-          Next fase outcomes:
+          Next phase outcomes:
         </Typography>
         <List>
           <ListItem>
