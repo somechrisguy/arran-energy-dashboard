@@ -74,7 +74,7 @@ export default function Home() {
           </ChartTabsPanel>
         </Grid>
         <Grid item xs={12} md={6}>
-          <ChartTabsPanel title="Main heating options" view={view}>
+          <ChartTabsPanel title="Main Heating Options" view={view}>
             <CSVDonutChart csvFile="./data/1Ca.csv" unit=" houses" />
             <StackedAreaChart csvFile="./data/1Cb.csv" />
           </ChartTabsPanel>
